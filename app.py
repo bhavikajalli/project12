@@ -110,7 +110,7 @@ def index():
     ticker = app.vars['ticker_symbol']
     #url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?ticker='+ticker+'&api_key=BQR2bnRMkoJwe8QVn_6_'
     url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?ticker='+ticker+'&api_key='+str(os.environ.get('QUANDL_KEY', None))
-    req = requests.get(url, auth=HTTPBasicAuth('bhavikaj@gmail.com','bhavikaj-di'))
+    req = requests.get(url, auth=HTTPBasicAuth(str(os.environ.get['QUANDL_USERNAME']),str(os.environ.get['QUANDL_PASSWORD'])))
 
     data_dict = req.json()
     columns = []
