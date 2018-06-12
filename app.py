@@ -2,8 +2,6 @@ from flask import Flask, render_template, request, redirect
 import os
 import requests
 from requests.auth import HTTPBasicAuth
-#import simplejson as json
-from boto.s3.connection import S3Connection
 import json
 import pandas as pd
 from bokeh.io import output_notebook
@@ -110,7 +108,8 @@ def index():
     variables = list(set(variables))
     payload = ('bhavikaj@gmail.com','bhavikaj-di')
     ticker = app.vars['ticker_symbol']
-    url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?ticker='+ticker+'&api_key=BQR2bnRMkoJwe8QVn_6_'
+    #url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?ticker='+ticker+'&api_key=BQR2bnRMkoJwe8QVn_6_'
+    url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?ticker='+ticker+'&api_key='+str(os.environ.get('QUANDL_KEY', None))
     req = requests.get(url, auth=HTTPBasicAuth('bhavikaj@gmail.com','bhavikaj-di'))
 
     data_dict = req.json()
