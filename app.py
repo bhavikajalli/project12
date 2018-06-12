@@ -101,26 +101,15 @@ def index():
                 app.vars[checkbox] = checkbox
                 variables.append(checkbox)
     
-
-    #s3 = S3Connection(os.environ['QUANDL_KEY'], os.environ['QUANDL_USERNAME'],os.environ['QUANDL_PASSWORD'])
-    #print(s3['QUANDL_KEY'])
-    #QUANDL_KEY = os.environ.get('QUANDL_KEY', None)
     variables = list(set(variables))
     payload = ('bhavikaj@gmail.com','bhavikaj-di')
     ticker = app.vars['ticker_symbol']
-    #url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?ticker='+ticker+'&api_key=BQR2bnRMkoJwe8QVn_6_'
     url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?ticker='+ticker+'&api_key='+str(os.environ.get('QUANDL_KEY', None))
     username = str(os.environ.get('QUANDL_USERNAME',None))
     password = str(os.environ.get('QUANDL_PASSWORD',None))
     req = requests.get(url, auth=HTTPBasicAuth(username,password))
 
     data_dict = req.json()
-#    f = open('%s.txt'%(app.vars['ticker_symbol']),'w')
-#    f.write(str(url))
-#    f.write(username)
-#    f.write(password)
-#    f.write(" ".join(variables))
-#    f.close()
     columns = []
     temp = data_dict['datatable']['columns']
     for item in temp:
@@ -141,11 +130,10 @@ def index():
     plot = create_line_chart(data_df,ticker,arguments,hover_tool = hover)
     script, div = components(plot)
 
-    #return render_template("chart.html",
     return render_template("chart.html",the_div=div, the_script=script)
 
 
 if __name__ == '__main__':
-    #port = int(os.environ.get("PORT", 5000))
-    #app.run(host='0.0.0.0',port=port)
-    app.run(port=33507,debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0',port=port)
+    #app.run(port=33507,debug=True)
