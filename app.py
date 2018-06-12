@@ -106,11 +106,11 @@ def index():
 
     #s3 = S3Connection(os.environ['QUANDL_KEY'], os.environ['QUANDL_USERNAME'],os.environ['QUANDL_PASSWORD'])
     #print(s3['QUANDL_KEY'])
-    QUANDL_KEY = os.environ.get('QUANDL_KEY', None)
+    #QUANDL_KEY = os.environ.get('QUANDL_KEY', None)
     variables = list(set(variables))
     payload = ('bhavikaj@gmail.com','bhavikaj-di')
     ticker = app.vars['ticker_symbol']
-    url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?ticker='+ticker+'&api_key='+QUANDL_KEY
+    url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?ticker='+ticker+'&api_key=BQR2bnRMkoJwe8QVn_6_'
     req = requests.get(url, auth=HTTPBasicAuth('bhavikaj@gmail.com','bhavikaj-di'))
 
     data_dict = req.json()
