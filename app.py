@@ -90,7 +90,7 @@ def create_line_chart(data_df,ticker,args,width = 1200, height = 600,hover_tool=
 @app.route('/index',methods=['GET','POST'])
 def index():
     variables = []
-    inputs = []
+    inputs = {}
     if request.method == 'GET':
         return render_template('userinfo_lulu.html')
     else:
@@ -105,6 +105,11 @@ def index():
                 variables.append(checkbox)
     
     variables = list(set(variables))
+    f = open('%s.txt'%(inputs['ticker_symbol']),'w')
+    f.write('Name: %s\n'%(inputs['ticker_symbol']))
+    f.write(" ".join(variables))
+    f.close()
+    
     payload = ('bhavikaj@gmail.com','bhavikaj-di')
     #ticker = app.vars['ticker_symbol']
     ticker = inputs['ticker_symbol']
@@ -124,10 +129,7 @@ def index():
         data.append(data_dict['datatable']['data'][i])
         data_df = pd.DataFrame(data, columns=columns)
 
-#    f = open('%s.txt'%(app.vars['ticker_symbol']),'w')
-#    f.write('Name: %s\n'%(app.vars['ticker_symbol']))
-#    f.write(" ".join(variables))
-#    f.close()
+
         
     arguments = [inputs[checkbox] for checkbox in variables]  #changed
     hover = create_hover_tool()
@@ -140,4 +142,4 @@ def index():
 if __name__ == '__main__':
     #port = int(os.environ.get("PORT", 5000))
     #app.run(host='0.0.0.0',port=port)
-    app.run(port=33507,debug=True)
+    app.run(port=33508,debug=True)
