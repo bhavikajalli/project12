@@ -90,7 +90,7 @@ def create_line_chart(data_df,ticker,args,width = 1200, height = 600,hover_tool=
 @app.route('/index',methods=['GET','POST'])
 def index():
     variables = []
-    imputs = []
+    inputs = []
     if request.method == 'GET':
         return render_template('userinfo_lulu.html')
     else:
@@ -138,6 +138,6 @@ def index():
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0',port=port)
-    #app.run(port=33507,debug=True)
+    #port = int(os.environ.get("PORT", 5000))
+    #app.run(host='0.0.0.0',port=port)
+    app.run(port=33507,debug=True)
