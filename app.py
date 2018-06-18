@@ -17,7 +17,7 @@ from bokeh.models import (HoverTool, FactorRange, Plot, LinearAxis, Grid,
 
 
 app = Flask(__name__)
-app.vars={}
+#app.vars={}
 
 
 #@app.route('/')
@@ -90,20 +90,24 @@ def create_line_chart(data_df,ticker,args,width = 1200, height = 600,hover_tool=
 @app.route('/index',methods=['GET','POST'])
 def index():
     variables = []
+    imputs = []
     if request.method == 'GET':
         return render_template('userinfo_lulu.html')
     else:
         #request was a POST
-        app.vars['ticker_symbol'] = request.form['ticker_symbol_lulu']
+        #app.vars['ticker_symbol'] = request.form['ticker_symbol_lulu']
+        inputs['ticker_symbol'] = request.form['ticker_symbol_lulu']
         for checkbox in "close", "adj_close", "open","adj_open":
             value = request.form.get(checkbox)
             if value:
-                app.vars[checkbox] = checkbox
+                #app.vars[checkbox] = checkbox
+                inputs[checkbox] = checkbox
                 variables.append(checkbox)
     
     variables = list(set(variables))
     payload = ('bhavikaj@gmail.com','bhavikaj-di')
-    ticker = app.vars['ticker_symbol']
+    #ticker = app.vars['ticker_symbol']
+    ticker = inputs['ticker_symbol']
     url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?ticker='+ticker+'&api_key='+str(os.environ.get('QUANDL_KEY', None))
     username = str(os.environ.get('QUANDL_USERNAME',None))
     password = str(os.environ.get('QUANDL_PASSWORD',None))
@@ -125,7 +129,7 @@ def index():
 #    f.write(" ".join(variables))
 #    f.close()
         
-    arguments = [app.vars[checkbox] for checkbox in variables]  
+    arguments = [inputs[checkbox] for checkbox in variables]  #changed
     hover = create_hover_tool()
     plot = create_line_chart(data_df,ticker,arguments,hover_tool = hover)
     script, div = components(plot)
